@@ -86,6 +86,7 @@ async function loadlines(url) {
   L.geoJSON(geojson, {
     onEachFeature: function (feature, layer) {
       console.log(feature);
+      console.log(feature.properties.LINE_NAME);
       layer.bindPopup(``
       );
     }
@@ -101,6 +102,7 @@ async function loadstops(url) {
   L.geoJSON(geojson, {
     onEachFeature: function (feature, layer) {
       console.log(feature);
+      console.log(feature.properties.STAT_NAME);
       layer.bindPopup(``
       );
     }
@@ -116,6 +118,7 @@ async function loadzones(url) {
   L.geoJSON(geojson, {
     onEachFeature: function (feature, layer) {
       console.log(feature);
+      console.log(feature.properties.ADRESSE);
       layer.bindPopup(``
       );
     }
@@ -131,6 +134,7 @@ async function loadhotels(url) {
   L.geoJSON(geojson, {
     onEachFeature: function (feature, layer) {
       console.log(feature);
+      console.log(feature.properties.BETRIEB);
       layer.bindPopup(``
       );
     }
