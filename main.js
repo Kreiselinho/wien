@@ -87,8 +87,13 @@ async function loadlines(url) {
     onEachFeature: function (feature, layer) {
       console.log(feature);
       console.log(feature.properties.LINE_NAME);
-      layer.bindPopup(``
-      );
+      layer.bindPopup(`
+      <h4><i class="fa-solid fa-bus"></i> ${feature.properties.LINE_NAME}</h4>
+      <i class="fa-regular fa-circle-stop"></i> ${feature.properties.FROM_NAME} <br>
+      <i class="fa-solid fa-arrow-down"></i> <br>
+      <i class="fa-regular fa-circle-stop"></i> ${feature.properties.TO_NAME}
+      `
+    );
     }
   }).addTo(themaLayer.lines);
 }
@@ -103,7 +108,10 @@ async function loadstops(url) {
     onEachFeature: function (feature, layer) {
       console.log(feature);
       console.log(feature.properties.STAT_NAME);
-      layer.bindPopup(``
+      layer.bindPopup(`
+      <h4><i class="fa-solid fa-bus"></i> ${feature.properties.LINE_NAME}</h4>
+      ${feature.properties.STAT_ID}
+      ${feature.properties.STAT_NAME}`
       );
     }
   }).addTo(themaLayer.stops);
@@ -119,7 +127,11 @@ async function loadzones(url) {
     onEachFeature: function (feature, layer) {
       console.log(feature);
       console.log(feature.properties.ADRESSE);
-      layer.bindPopup(``
+      layer.bindPopup(`
+      <h4>Fußgängerzone ${feature.properties.ADRESSE}</h4>
+      <i class="fa-regular fa-clock"></i> ${feature.properties.ZEITRAUM} <br>
+      <br> <i class="fa-solid fa-circle-info"></i> ${feature.properties.AUSN_TEXT}
+      `
       );
     }
   }).addTo(themaLayer.zones);
@@ -135,7 +147,15 @@ async function loadhotels(url) {
     onEachFeature: function (feature, layer) {
       console.log(feature);
       console.log(feature.properties.BETRIEB);
-      layer.bindPopup(``
+      layer.bindPopup(`
+      <h3> ${feature.properties.BETRIEB} </h3>
+      <h4> ${feature.properties.BETRIEBSART_TXT} ${feature.properties.KATEGORIE_TXT} </h4>
+      <hr>
+      <p>Adr.: ${feature.properties.ADRESSE} <br>
+      Tel.: <a href="tel:${feature.properties.KONTAKT_TEL}"> ${feature.properties.KONTAKT_TEL}</a> <br>
+      E-Mail: <a href="mailto:${feature.properties.KONTAKT_EMAIL}">${feature.properties.KONTAKT_EMAIL}</a> <br>
+      <a href="${feature.properties.WEBLINK1}"target="hotel">Homepage</a>
+      `
       );
     }
   }).addTo(themaLayer.hotels);
