@@ -19,7 +19,7 @@ let themaLayer = {
   lines: L.featureGroup(),
   stops: L.featureGroup(),
   zones: L.featureGroup(),
-  hotels: L.featureGroup().addTo(map),
+  hotels: L.markerClusterGroup().addTo(map),
 }
 // Hintergrundlayer
 L.control
