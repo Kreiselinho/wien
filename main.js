@@ -15,11 +15,11 @@ let startLayer = L.tileLayer.provider("BasemapAT.grau");
 startLayer.addTo(map);
 
 let themaLayer = {
-  sights: L.featureGroup().addTo(map),
+  sights: L.featureGroup(),
   lines: L.featureGroup(),
   stops: L.featureGroup(),
   zones: L.featureGroup(),
-  hotels: L.featureGroup(),
+  hotels: L.featureGroup().addTo(map),
 }
 // Hintergrundlayer
 L.control
@@ -131,13 +131,30 @@ async function loadlines(url) {
 }
 loadlines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json")
 
+/* 
+bus_1.png Red
+bus_2.png Yellow
+bus_3.png Blue
+bus_4.png Green
+bus_5.png Grey
+bus_6.png Orange
+*/
 async function loadstops(url) {
   console.log("Loading", url);
   let response = await fetch(url);
   let geojson = await response.json();
   console.log(geojson);
   L.geoJSON(geojson, {
-    onEachFeature: function (feature, layer) {
+    pointToLayer: function(feature, latlng) {
+      return L.marker(latlng, {
+      icon: L.icon({
+        iconUrl: `icons/bus_${feature.properties.LINE_ID}.png`,
+        iconAnchor: [16, 37],
+        popupAnchor: [0, -37]
+      })
+    });
+  },
+      onEachFeature: function (feature, layer) {
       console.log(feature);
       console.log(feature.properties.STAT_NAME);
       layer.bindPopup(`
@@ -183,6 +200,30 @@ async function loadhotels(url) {
   let geojson = await response.json();
   console.log(geojson);
   L.geoJSON(geojson, {
+    pointToLayer: function (feature, latlng) {
+      let hotelKat = feature.properties.KATEGORIE_TXT
+      let star;
+      if (hotelKat == "1*") {
+        star = "icons/hotel_1star.png"
+      } else if (hotelKat == "2*") {
+        star = "icons/hotel_2stars.png"
+      } else if (hotelKat == "3*") {
+        star = "icons/hotel_3stars.png"
+      } else if (hotelKat == "4*") {
+        star = "icons/hotel_4stars.png"
+      } else if (hotelKat == "5*") {
+        star = "icons/hotel_5stars.png"
+      } else {
+        star = "icons/hotel_0star.png"
+      }
+      return L.marker(latlng, {
+        icon: L.icon({
+          iconUrl: star,
+          iconAnchor: [16, 37],
+          popupAnchor: [0, -37],
+        })
+      });
+    },
     onEachFeature: function (feature, layer) {
       console.log(feature);
       console.log(feature.properties.BETRIEB);
