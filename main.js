@@ -65,8 +65,8 @@ async function loadSights(url) {
   let geojson = await response.json();
   console.log(geojson);
   L.geoJSON(geojson, {
-    pointToLayer: function(feature, latlng) {
-        return L.marker(latlng, {
+    pointToLayer: function (feature, latlng) {
+      return L.marker(latlng, {
         icon: L.icon({
           iconUrl: "icons/photo.png",
           iconAnchor: [16, 37],
@@ -95,7 +95,7 @@ async function loadlines(url) {
   let geojson = await response.json();
   console.log(geojson);
   L.geoJSON(geojson, {
-    style: function(feature) {
+    style: function (feature) {
       //console.log(feature.properties.LINE_NAME);
       let lineName = feature.properties.LINE_NAME;
       let lineColor = "black";
@@ -127,7 +127,7 @@ async function loadlines(url) {
       <i class="fa-solid fa-arrow-down"></i> <br>
       <i class="fa-regular fa-circle-stop"></i> ${feature.properties.TO_NAME}
       `
-    );
+      );
     }
   }).addTo(themaLayer.lines);
 }
@@ -147,16 +147,16 @@ async function loadstops(url) {
   let geojson = await response.json();
   console.log(geojson);
   L.geoJSON(geojson, {
-    pointToLayer: function(feature, latlng) {
+    pointToLayer: function (feature, latlng) {
       return L.marker(latlng, {
-      icon: L.icon({
-        iconUrl: `icons/bus_${feature.properties.LINE_ID}.png`,
-        iconAnchor: [16, 37],
-        popupAnchor: [0, -37]
-      })
-    });
-  },
-      onEachFeature: function (feature, layer) {
+        icon: L.icon({
+          iconUrl: `icons/bus_${feature.properties.LINE_ID}.png`,
+          iconAnchor: [16, 37],
+          popupAnchor: [0, -37]
+        })
+      });
+    },
+    onEachFeature: function (feature, layer) {
       console.log(feature);
       console.log(feature.properties.STAT_NAME);
       layer.bindPopup(`
@@ -175,11 +175,12 @@ async function loadzones(url) {
   let geojson = await response.json();
   console.log(geojson);
   L.geoJSON(geojson, {
-    style: function(feature) {
-      return {color: "#F012BE",
-      weight: 1,
-      opacity: 0.4,
-      fillOpacity: 0.1,
+    style: function (feature) {
+      return {
+        color: "#F012BE",
+        weight: 1,
+        opacity: 0.4,
+        fillOpacity: 0.1,
       };
     },
     onEachFeature: function (feature, layer) {
